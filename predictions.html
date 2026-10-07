@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block heading %}Predictions{% endblock %}
+{% block content %}
+<div class="section-head">
+    <div><p class="eyebrow">RISK ANALYSIS</p><h2>Machine health predictions</h2></div>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Machine</th><th>Health Status</th><th>Failure Probability</th><th>Recommended Action</th><th>Date</th></tr></thead>
+<tbody>
+{% for p in predictions %}
+<tr>
+<td><strong>{{ p.machine_name }}</strong></td>
+<td><span class="badge {{ p.health_status|lower }}">{{ p.health_status }}</span></td>
+<td>{{ p.failure_probability }}%</td>
+<td>{{ p.predicted_action }}</td>
+<td>{{ p.prediction_date }}</td>
+</tr>
+{% else %}
+<tr><td colspan="5" class="empty">No prediction records available.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

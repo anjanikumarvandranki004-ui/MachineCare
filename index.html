@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block heading %}Machine Health Dashboard{% endblock %}
+{% block content %}
+
+<section class="hero">
+    <div>
+        <p class="eyebrow">PREDICTIVE MAINTENANCE</p>
+        <h2>Monitor machines before failures happen.</h2>
+        <p>Track temperature, vibration, pressure and operating hours to identify abnormal conditions and plan maintenance.</p>
+    </div>
+    <a class="btn primary" href="/machines">Manage Machines →</a>
+</section>
+
+<section class="stats">
+    <div class="stat-card">
+        <span class="stat-label">TOTAL MACHINES</span>
+        <strong>{{ total }}</strong>
+        <small>Registered in system</small>
+    </div>
+    <div class="stat-card good">
+        <span class="stat-label">HEALTHY</span>
+        <strong>{{ healthy }}</strong>
+        <small>Normal condition</small>
+    </div>
+    <div class="stat-card warning">
+        <span class="stat-label">WARNING</span>
+        <strong>{{ warning }}</strong>
+        <small>Needs attention</small>
+    </div>
+    <div class="stat-card danger">
+        <span class="stat-label">CRITICAL</span>
+        <strong>{{ critical }}</strong>
+        <small>Immediate inspection</small>
+    </div>
+</section>
+
+<section class="section-head">
+    <div>
+        <p class="eyebrow">SENSOR MONITORING</p>
+        <h2>Latest sensor readings</h2>
+    </div>
+    <a href="/sensors">View all readings →</a>
+</section>
+
+<div class="table-wrap">
+<table>
+    <thead>
+        <tr>
+            <th>Machine</th>
+            <th>Temperature</th>
+            <th>Vibration</th>
+            <th>Pressure</th>
+            <th>Reading Time</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for r in readings %}
+        <tr>
+            <td><strong>{{ r.machine_name }}</strong></td>
+            <td>{{ r.temperature }} °C</td>
+            <td>{{ r.vibration }} mm/s</td>
+            <td>{{ r.pressure }} bar</td>
+            <td>{{ r.reading_time }}</td>
+            <td><span class="badge {{ (r.health_status or 'Not Analysed')|lower|replace(' ', '-') }}">{{ r.health_status }}</span></td>
+        </tr>
+    {% else %}
+        <tr><td colspan="6" class="empty">No sensor readings available.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+<section class="section-head machine-section">
+    <div>
+        <p class="eyebrow">MACHINE OVERVIEW</p>
+        <h2>Machine health and failure risk</h2>
+    </div>
+    <a href="/predictions">View predictions →</a>
+</section>
+
+<div class="table-wrap">
+<table>
+    <thead>
+        <tr>
+            <th>Machine</th>
+            <th>Type</th>
+            <th>Department</th>
+            <th>Operating Hours</th>
+            <th>Health</th>
+            <th>Failure Risk</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for m in machines %}
+        <tr>
+            <td><strong>{{ m.machine_name }}</strong></td>
+            <td>{{ m.type_name or '—' }}</td>
+            <td>{{ m.department_name or '—' }}</td>
+            <td>{{ m.operating_hours }}</td>
+            <td><span class="badge {{ (m.health_status or 'Not Analysed')|lower|replace(' ', '-') }}">{{ m.health_status }}</span></td>
+            <td><strong>{{ m.failure_probability }}%</strong></td>
+        </tr>
+    {% else %}
+        <tr><td colspan="6" class="empty">No machine data yet.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+
+{% endblock %}

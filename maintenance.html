@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block heading %}Maintenance{% endblock %}
+{% block content %}
+<div class="section-head">
+    <div><p class="eyebrow">SERVICE HISTORY</p><h2>Maintenance records</h2></div>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Machine</th><th>Type</th><th>Date</th><th>Technician</th><th>Cost</th><th>Remarks</th></tr></thead>
+<tbody>
+{% for r in records %}
+<tr>
+<td><strong>{{ r.machine_name }}</strong></td>
+<td>{{ r.maintenance_type }}</td><td>{{ r.maintenance_date }}</td>
+<td>{{ r.technician_name or '—' }}</td><td>₹{{ r.cost or '0' }}</td><td>{{ r.remarks or '—' }}</td>
+</tr>
+{% else %}
+<tr><td colspan="6" class="empty">No maintenance records available.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

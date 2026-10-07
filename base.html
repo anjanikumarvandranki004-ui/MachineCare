@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MachineCare | Predictive Maintenance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">⚙</div>
+            <div>
+                <strong>MachineCare</strong>
+                <small>Predictive Maintenance</small>
+            </div>
+        </div>
+
+        <nav>
+            <a href="/" class="{% if request.path == '/' %}active{% endif %}">▦ <span>Dashboard</span></a>
+            <a href="/machines" class="{% if request.path == '/machines' %}active{% endif %}">⚙ <span>Machines</span></a>
+            <a href="/sensors" class="{% if request.path == '/sensors' %}active{% endif %}">◉ <span>Sensor Readings</span></a>
+            <a href="/predictions" class="{% if request.path == '/predictions' %}active{% endif %}">◈ <span>Predictions</span></a>
+            <a href="/maintenance" class="{% if request.path == '/maintenance' %}active{% endif %}">🔧 <span>Maintenance</span></a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="status-dot"></div>
+            <div>
+                <strong>System Online</strong>
+                <small>MySQL connected</small>
+            </div>
+        </div>
+    </aside>
+
+    <main class="content">
+        <header class="topbar">
+            <div>
+                <div class="eyebrow">INDUSTRIAL MONITORING SYSTEM</div>
+                <h1>{% block heading %}Machine Health Dashboard{% endblock %}</h1>
+            </div>
+            <div class="topbar-right">
+                <span class="live"><i></i> Live monitoring</span>
+                <span class="avatar">ME</span>
+            </div>
+        </header>
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

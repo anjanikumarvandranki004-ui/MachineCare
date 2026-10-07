@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block heading %}Sensor Readings{% endblock %}
+{% block content %}
+<div class="section-head">
+    <div><p class="eyebrow">LIVE PARAMETERS</p><h2>Temperature, vibration & pressure</h2></div>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Machine</th><th>Sensor</th><th>Temperature</th><th>Vibration</th><th>Pressure</th><th>Reading Time</th></tr></thead>
+<tbody>
+{% for r in readings %}
+<tr>
+<td><strong>{{ r.machine_name }}</strong></td><td>{{ r.sensor_type }}</td>
+<td>{{ r.temperature }} °C</td><td>{{ r.vibration }}</td><td>{{ r.pressure }}</td><td>{{ r.reading_time }}</td>
+</tr>
+{% else %}
+<tr><td colspan="6" class="empty">No sensor readings available.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}

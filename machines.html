@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block heading %}Machines{% endblock %}
+{% block content %}
+
+<div class="page-actions">
+    <div>
+        <p class="eyebrow">ASSET MANAGEMENT</p>
+        <h2>Registered Machines</h2>
+    </div>
+    <button class="btn primary" onclick="document.getElementById('addForm').classList.toggle('hidden')">+ Add Machine</button>
+</div>
+
+<form id="addForm" class="form-card hidden" action="/machines/add" method="POST">
+    <h3>Add Machine</h3>
+    <div class="form-grid">
+        <label>Machine Name<input name="machine_name" required placeholder="e.g. CNC Machine 02"></label>
+        <label>Machine Type
+            <select name="type_id" required>
+                {% for t in types %}<option value="{{ t.type_id }}">{{ t.type_name }}</option>{% endfor %}
+            </select>
+        </label>
+        <label>Department
+            <select name="department_id" required>
+                {% for d in departments %}<option value="{{ d.department_id }}">{{ d.department_name }}</option>{% endfor %}
+            </select>
+        </label>
+        <label>Installation Date<input type="date" name="installation_date" required></label>
+        <label>Operating Hours<input type="number" name="operating_hours" value="0" min="0"></label>
+    </div>
+    <button class="btn primary" type="submit">Save Machine</button>
+</form>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th>ID</th><th>Machine</th><th>Type</th><th>Department</th><th>Installed</th><th>Operating Hours</th></tr></thead>
+<tbody>
+{% for m in machines %}
+<tr>
+<td>#{{ m.machine_id }}</td>
+<td><strong>{{ m.machine_name }}</strong></td>
+<td>{{ m.type_name or '—' }}</td>
+<td>{{ m.department_name or '—' }}</td>
+<td>{{ m.installation_date }}</td>
+<td>{{ m.operating_hours }}</td>
+</tr>
+{% else %}
+<tr><td colspan="6" class="empty">No machines found.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% endblock %}
